@@ -4,15 +4,11 @@ using System;
 
 public class ReactiveTarget : MonoBehaviour {
 
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
-	}
-
     public void ReactToHit() {
+        WanderingAI behaviour = GetComponent<WanderingAI>();
+        if (behaviour != null) {
+            behaviour.SetAlive(false);
+        }
         StartCoroutine(Die());
     }
 
