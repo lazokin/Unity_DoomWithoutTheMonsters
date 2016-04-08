@@ -5,10 +5,24 @@ using System.Collections;
 [AddComponentMenu("Control Script/FPS Input")]
 public class FPSInput : MonoBehaviour {
 
+    public const float baseSpeed = 6.0f;
+
     public float speed = 6.0f;
     public float gravity = -9.81f;
 
     private CharacterController _charController;
+
+    void Awake() {
+        Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChange);
+    }
+
+    void OnDestroy() {
+        Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChange);
+    }
+
+    private void OnSpeedChange(float value) {
+        speed = baseSpeed * value;
+    }
 
     void Start() {
         _charController = GetComponent<CharacterController>();

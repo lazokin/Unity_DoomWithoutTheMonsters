@@ -7,7 +7,7 @@ public class SceneController : MonoBehaviour {
     private GameObject enemyPrefab;
     private GameObject _enemy;
 
-	void Update () {
+    void Update () {
         if (_enemy == null) {
             _enemy = Instantiate(enemyPrefab) as GameObject;
             _enemy.transform.position = new Vector3(0, 1, 0);

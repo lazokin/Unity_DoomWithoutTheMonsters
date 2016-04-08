@@ -7,16 +7,30 @@ public class WanderingAI : MonoBehaviour {
     private GameObject fireballPrefab;
     private GameObject _fireball;
 
+    public const float baseSpeed = 3.0f;
+
     public float speed = 3.0f;
     public float obstacleRange = 5.0f;
 
     private bool _alive;
 
+    void Awake() {
+        Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChange);
+    }
+
+    void OnDestroy() {
+        Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChange);
+    }
+
+    private void OnSpeedChange(float value) {
+        speed = baseSpeed * value;
+    }
+
     void Start() {
         _alive = true;
     }
 
-	void Update () {
+    void Update () {
         if (_alive) {
             transform.Translate(0, 0, speed * Time.deltaTime);
             Ray ray = new Ray(transform.position, transform.forward);
